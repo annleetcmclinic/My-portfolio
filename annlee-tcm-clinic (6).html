@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Annlee TCM Clinic | Acupuncture & Herbal Medicine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream:     #f9f4ed;
+      --parchment: #f0e8d8;
+      --warm-tan:  #d4b896;
+      --sage:      #8a9e7e;
+      --deep-sage: #5a6e50;
+      --terracotta:#b5785a;
+      --espresso:  #3b2a1a;
+      --text-dark: #2c1e0f;
+      --text-mid:  #5c4a30;
+      --text-light:#8a7560;
+      --white:     #ffffff;
+      --gold:      #c4973a;
+      --border:    rgba(180,150,110,0.25);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; font-weight: 400; line-height: 1.2; }
+
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+    .section-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 1rem;
+    }
+    .divider { width: 48px; height: 1px; background: var(--warm-tan); margin: 1.5rem 0; }
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 1.5px solid var(--espresso);
+      color: var(--espresso);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn:hover { background: var(--espresso); color: var(--cream); }
+    .btn-filled { background: var(--espresso); color: var(--cream); border-color: var(--espresso); }
+    .btn-filled:hover { background: var(--terracotta); border-color: var(--terracotta); }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.2rem 0;
+      background: rgba(249,244,237,0.93);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1120px; margin: 0 auto; padding: 0 2rem;
+    }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 600; color: var(--espresso); letter-spacing: 0.04em; }
+    .nav-logo span { color: var(--terracotta); }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-mid); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--terracotta); }
+    .nav-cta { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.6rem 1.4rem; border: 1px solid var(--espresso); color: var(--espresso); transition: all 0.2s; }
+    .nav-cta:hover { background: var(--espresso); color: var(--cream); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--espresso); }
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--cream); z-index: 200;
+      flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--espresso); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--espresso); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      background: var(--parchment); padding-top: 80px;
+    }
+    .hero-texture {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(212,184,150,0.3) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(138,158,126,0.15) 0%, transparent 60%);
+    }
+    .hero-botanical {
+      position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
+      width: min(480px, 42vw); height: min(600px, 70vh); opacity: 0.12;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 640px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: rgba(255,255,255,0.6); border: 1px solid var(--border);
+      padding: 0.4rem 1rem; border-radius: 2px;
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-mid); margin-bottom: 2rem;
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--sage); border-radius: 50%; }
+    .hero-h1 { font-size: clamp(3rem, 6vw, 5.2rem); font-weight: 300; color: var(--espresso); line-height: 1.08; margin-bottom: 1.5rem; }
+    .hero-h1 em { font-style: italic; color: var(--terracotta); }
+    .hero-tagline { font-size: 1.05rem; font-weight: 300; color: var(--text-mid); max-width: 440px; line-height: 1.8; margin-bottom: 2.5rem; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .hero-divider { color: var(--text-light); font-size: 0.75rem; letter-spacing: 0.1em; }
+    .hero-phone { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-mid); }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-light);
+      animation: float 2.5s ease-in-out infinite;
+    }
+    .hero-scroll::after { content: ''; width: 1px; height: 40px; background: linear-gradient(to bottom, var(--warm-tan), transparent); }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+    .hero-stats { margin-top: 4rem; display: flex; gap: 3rem; flex-wrap: wrap; }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; color: var(--espresso); line-height: 1; }
+    .stat-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); margin-top: 0.3rem; }
+
+    /* MARQUEE */
+    .marquee-strip { background: var(--espresso); padding: 0.9rem 0; overflow: hidden; white-space: nowrap; }
+    .marquee-inner { display: inline-flex; gap: 3rem; animation: marquee 28s linear infinite; }
+    .marquee-inner span { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-tan); }
+    .marquee-inner .dot { color: var(--terracotta); font-size: 1rem; line-height: 0; vertical-align: middle; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ABOUT */
+    #about { padding: 8rem 0; position: relative; overflow: hidden; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .about-portrait-frame { position: relative; width: 100%; max-width: 400px; }
+    .about-portrait-bg {
+      width: 100%; padding-top: 120%;
+      background: linear-gradient(145deg, var(--parchment) 0%, var(--warm-tan) 100%);
+      position: relative; overflow: hidden;
+    }
+    .portrait-initial { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+    .portrait-initial::before {
+      content: 'SC'; font-family: 'Cormorant Garamond', serif;
+      font-size: 9rem; font-weight: 300; color: rgba(59,42,26,0.12); letter-spacing: -0.05em;
+    }
+    .portrait-herb-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(to top, rgba(90,110,80,0.15), transparent); }
+    .about-accent-box { position: absolute; bottom: -1.5rem; right: -1.5rem; width: 120px; height: 120px; border: 1px solid var(--warm-tan); z-index: -1; }
+    .about-credential {
+      position: absolute; bottom: 2rem; left: -2rem;
+      background: var(--white); border: 1px solid var(--border);
+      padding: 1rem 1.4rem; box-shadow: 0 4px 24px rgba(59,42,26,0.08);
+    }
+    .credential-title { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); margin-bottom: 0.2rem; }
+    .credential-value { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--espresso); }
+    .about-text h2 { font-size: clamp(2.2rem, 4vw, 3.4rem); color: var(--espresso); margin-bottom: 1.5rem; }
+    .about-text h2 em { color: var(--terracotta); font-style: italic; }
+    .about-text p { font-size: 0.97rem; color: var(--text-mid); margin-bottom: 1.2rem; font-weight: 300; }
+    .about-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+    .pill { padding: 0.35rem 0.9rem; border: 1px solid var(--warm-tan); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mid); border-radius: 1px; }
+
+    /* APPROACH */
+    #approach { padding: 8rem 0; background: var(--espresso); position: relative; overflow: hidden; }
+    #approach .section-label { color: var(--warm-tan); }
+    .approach-header h2 { font-size: clamp(2.2rem, 4vw, 3.4rem); color: var(--cream); max-width: 520px; margin-bottom: 4rem; }
+    .approach-header h2 em { color: var(--warm-tan); font-style: italic; }
+    .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .step-card {
+      background: rgba(255,255,255,0.04); padding: 2.5rem 2rem;
+      border: 1px solid rgba(255,255,255,0.06); position: relative; transition: background 0.3s;
+    }
+    .step-card:hover { background: rgba(255,255,255,0.07); }
+    .step-num { font-family: 'Cormorant Garamond', serif; font-size: 5rem; font-weight: 300; color: rgba(255,255,255,0.07); line-height: 1; margin-bottom: 1.5rem; }
+    .step-icon { width: 40px; height: 40px; margin-bottom: 1.2rem; color: var(--warm-tan); }
+    .step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--cream); margin-bottom: 0.8rem; }
+    .step-desc { font-size: 0.88rem; color: rgba(240,232,216,0.65); line-height: 1.75; font-weight: 300; }
+    .step-line { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--terracotta); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+    .step-card:hover .step-line { transform: scaleX(1); }
+
+    /* SERVICES */
+    #services { padding: 8rem 0; background: var(--cream); }
+    .services-header { text-align: center; margin-bottom: 4rem; }
+    .services-header h2 { font-size: clamp(2.2rem, 4vw, 3.4rem); color: var(--espresso); }
+    .services-header h2 em { color: var(--terracotta); font-style: italic; }
+    .services-header p { max-width: 500px; margin: 1rem auto 0; font-size: 0.95rem; color: var(--text-light); font-weight: 300; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--border); border: 1.5px solid var(--border); margin-bottom: 4rem; }
+    .service-card { background: var(--cream); padding: 2.5rem; position: relative; transition: background 0.3s; }
+    .service-card:hover { background: var(--parchment); }
+    .service-icon-wrap { width: 48px; height: 48px; background: var(--parchment); display: flex; align-items: center; justify-content: center; margin-bottom: 1.4rem; border: 1px solid var(--border); }
+    .service-icon-wrap svg { width: 22px; height: 22px; color: var(--terracotta); }
+    .service-name { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--espresso); margin-bottom: 0.6rem; }
+    .service-desc { font-size: 0.875rem; color: var(--text-mid); line-height: 1.75; font-weight: 300; margin-bottom: 1.4rem; }
+    .service-price { display: flex; align-items: baseline; gap: 0.3rem; }
+    .price-amount { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--espresso); }
+    .price-unit { font-size: 0.72rem; letter-spacing: 0.1em; color: var(--text-light); text-transform: uppercase; }
+
+    /* BUNDLES */
+    .bundles-section { margin-top: 1rem; }
+    .bundles-label { text-align: center; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 2rem; }
+    .bundles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .bundle-card { background: var(--parchment); border: 1px solid var(--warm-tan); padding: 2.5rem; position: relative; overflow: hidden; }
+    .bundle-card.featured { background: var(--espresso); border-color: var(--espresso); }
+    .bundle-badge { position: absolute; top: 1.5rem; right: 1.5rem; background: var(--terracotta); color: var(--white); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.25rem 0.7rem; }
+    .bundle-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--espresso); margin-bottom: 0.5rem; }
+    .bundle-card.featured .bundle-name { color: var(--cream); }
+    .bundle-subtitle { font-size: 0.8rem; color: var(--text-light); letter-spacing: 0.06em; margin-bottom: 1.5rem; }
+    .bundle-card.featured .bundle-subtitle { color: rgba(240,232,216,0.6); }
+    .bundle-price { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; color: var(--espresso); line-height: 1; margin-bottom: 0.4rem; }
+    .bundle-card.featured .bundle-price { color: var(--cream); }
+    .bundle-per { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); margin-bottom: 1.5rem; }
+    .bundle-card.featured .bundle-per { color: rgba(240,232,216,0.5); }
+    .bundle-includes { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .bundle-includes li { font-size: 0.875rem; color: var(--text-mid); display: flex; align-items: center; gap: 0.6rem; font-weight: 300; }
+    .bundle-card.featured .bundle-includes li { color: rgba(240,232,216,0.75); }
+    .bundle-includes li::before { content: '—'; color: var(--sage); flex-shrink: 0; }
+    .bundle-card.featured .bundle-includes li::before { color: var(--warm-tan); }
+
+    /* CONTACT */
+    #contact { padding: 8rem 0; background: var(--parchment); position: relative; overflow: hidden; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+    .contact-info h2 { font-size: clamp(2rem, 3.5vw, 3rem); color: var(--espresso); margin-bottom: 1.5rem; }
+    .contact-info h2 em { color: var(--terracotta); font-style: italic; }
+    .contact-info p { font-size: 0.95rem; color: var(--text-mid); font-weight: 300; margin-bottom: 2.5rem; line-height: 1.8; }
+    .contact-details { display: flex; flex-direction: column; gap: 1.2rem; }
+    .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
+    .contact-item-icon { width: 36px; height: 36px; background: var(--cream); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-item-icon svg { width: 16px; height: 16px; color: var(--terracotta); }
+    .contact-item-text { font-size: 0.9rem; color: var(--text-mid); line-height: 1.6; font-weight: 300; }
+    .contact-item-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); display: block; margin-bottom: 0.2rem; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 0.85rem 1rem; background: var(--cream); border: 1px solid var(--border);
+      font-family: 'Jost', sans-serif; font-size: 0.9rem; color: var(--text-dark); font-weight: 300;
+      outline: none; transition: border-color 0.2s; width: 100%; border-radius: 0; -webkit-appearance: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--warm-tan); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-note { font-size: 0.75rem; color: var(--text-light); margin-top: 0.8rem; font-weight: 300; }
+
+    /* FOOTER */
+    footer { background: var(--espresso); color: var(--warm-tan); padding: 3rem 0 2rem; }
+    .footer-inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--cream); }
+    .footer-logo span { color: var(--warm-tan); }
+    .footer-tagline { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(212,184,150,0.5); }
+    .footer-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; justify-content: center; }
+    .footer-links a { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(212,184,150,0.6); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--warm-tan); }
+    .footer-copy { font-size: 0.72rem; color: rgba(212,184,150,0.35); padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); width: 100%; text-align: center; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    .fade-in { opacity: 0; animation: fadeUp 0.7s ease forwards; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.25s; }
+    .delay-3 { animation-delay: 0.4s; }
+    .delay-4 { animation-delay: 0.55s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { max-width: 320px; margin: 0 auto; }
+      .about-credential { left: 0; bottom: -1.5rem; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .bundles-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero-stats { gap: 2rem; }
+      #hero { padding-top: 70px; }
+      .hero-h1 { font-size: clamp(2.4rem, 8vw, 3.5rem); }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 1.25rem; }
+      #about, #approach, #services, #contact { padding: 5rem 0; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-logo">Annlee <span>TCM</span> Clinic</div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Book Now</a>
+      <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.add('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" onclick="document.getElementById('mobileMenu').classList.remove('open')" aria-label="Close">&#x2715;</button>
+    <a href="#about"    onclick="document.getElementById('mobileMenu').classList.remove('open')">About</a>
+    <a href="#approach" onclick="document.getElementById('mobileMenu').classList.remove('open')">Approach</a>
+    <a href="#services" onclick="document.getElementById('mobileMenu').classList.remove('open')">Services</a>
+    <a href="#contact"  onclick="document.getElementById('mobileMenu').classList.remove('open')">Book Now</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-texture"></div>
+    <svg class="hero-botanical" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <g stroke="#5a6e50" stroke-width="1.2">
+        <path d="M200 580 C195 500 210 420 190 340 C175 270 200 200 185 130 C172 70 200 30 200 10"/>
+        <path d="M195 420 C160 400 120 390 90 370 C65 355 40 340 20 320"/>
+        <ellipse cx="55" cy="330" rx="25" ry="10" transform="rotate(-30 55 330)" fill="#8a9e7e" opacity="0.4"/>
+        <ellipse cx="95" cy="375" rx="20" ry="8" transform="rotate(-15 95 375)" fill="#8a9e7e" opacity="0.35"/>
+        <path d="M188 360 C220 340 260 335 295 320 C325 308 355 295 375 275"/>
+        <ellipse cx="315" cy="312" rx="22" ry="9" transform="rotate(20 315 312)" fill="#8a9e7e" opacity="0.4"/>
+        <ellipse cx="360" cy="282" rx="18" ry="7" transform="rotate(15 360 282)" fill="#8a9e7e" opacity="0.35"/>
+        <path d="M193 290 C155 275 118 265 85 248 C58 234 30 215 15 192"/>
+        <ellipse cx="50" cy="203" rx="20" ry="8" transform="rotate(-25 50 203)" fill="#8a9e7e" opacity="0.4"/>
+        <ellipse cx="100" cy="252" rx="22" ry="9" transform="rotate(-10 100 252)" fill="#8a9e7e" opacity="0.38"/>
+        <path d="M190 240 C225 228 262 220 296 205 C322 193 348 178 368 158"/>
+        <ellipse cx="330" cy="186" rx="20" ry="8" transform="rotate(18 330 186)" fill="#8a9e7e" opacity="0.4"/>
+        <path d="M192 160 C170 140 145 128 120 110 C100 96 80 82 65 65"/>
+        <path d="M194 145 C215 130 238 118 260 100 C278 87 296 70 308 52"/>
+        <ellipse cx="130" cy="115" rx="16" ry="6" transform="rotate(-20 130 115)" fill="#8a9e7e" opacity="0.4"/>
+        <ellipse cx="265" cy="105" rx="16" ry="6" transform="rotate(22 265 105)" fill="#8a9e7e" opacity="0.4"/>
+        <circle cx="22" cy="318" r="4" fill="#b5785a" opacity="0.5"/>
+        <circle cx="376" cy="273" r="4" fill="#b5785a" opacity="0.5"/>
+        <circle cx="16" cy="190" r="3.5" fill="#b5785a" opacity="0.45"/>
+        <circle cx="370" cy="156" r="3.5" fill="#b5785a" opacity="0.45"/>
+        <circle cx="63" cy="63" r="3" fill="#b5785a" opacity="0.4"/>
+        <circle cx="310" cy="50" r="3" fill="#b5785a" opacity="0.4"/>
+      </g>
+    </svg>
+
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge fade-in delay-1">Traditional Chinese Medicine &middot; Missouri City, TX</div>
+        <h1 class="hero-h1 fade-in delay-2">Heal Deeply.<br/><em>Live Fully.</em></h1>
+        <p class="hero-tagline fade-in delay-3">Ancient wisdom, modern care. Specializing in pain management, stroke recovery, and whole-body wellness through acupuncture and herbal medicine.</p>
+        <div class="hero-actions fade-in delay-4">
+          <a href="#contact" class="btn btn-filled">Schedule a Consultation</a>
+          <span class="hero-divider">or call</span>
+          <a href="tel:8322825851" class="hero-phone">(832) 282-5851</a>
+        </div>
+        <div class="hero-stats fade-in delay-4">
+          <div class="stat-item"><div class="stat-num">15+</div><div class="stat-label">Years of Experience</div></div>
+          <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Core Specialties</div></div>
+          <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Natural Therapies</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-inner">
+      <span>Acupuncture</span><span class="dot">&middot;</span>
+      <span>Herbal Medicine</span><span class="dot">&middot;</span>
+      <span>Pain Management</span><span class="dot">&middot;</span>
+      <span>Stroke Recovery</span><span class="dot">&middot;</span>
+      <span>Holistic Wellness</span><span class="dot">&middot;</span>
+      <span>Cupping Therapy</span><span class="dot">&middot;</span>
+      <span>Traditional Chinese Medicine</span><span class="dot">&middot;</span>
+      <span>Acupuncture</span><span class="dot">&middot;</span>
+      <span>Herbal Medicine</span><span class="dot">&middot;</span>
+      <span>Pain Management</span><span class="dot">&middot;</span>
+      <span>Stroke Recovery</span><span class="dot">&middot;</span>
+      <span>Holistic Wellness</span><span class="dot">&middot;</span>
+      <span>Cupping Therapy</span><span class="dot">&middot;</span>
+      <span>Traditional Chinese Medicine</span><span class="dot">&middot;</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual">
+          <div class="about-portrait-frame">
+            <div class="about-portrait-bg">
+              <div class="portrait-initial"></div>
+              <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.18;" viewBox="0 0 300 360" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <g stroke="#5a6e50" stroke-width="1">
+                  <path d="M150 360 C148 300 155 240 145 180 C138 130 150 90 142 50 C136 20 150 5 150 0"/>
+                  <path d="M148 220 C120 205 90 198 65 185"/>
+                  <ellipse cx="78" cy="190" rx="20" ry="8" transform="rotate(-20 78 190)" fill="#8a9e7e" opacity="0.6"/>
+                  <path d="M147 180 C175 168 205 162 228 150"/>
+                  <ellipse cx="212" cy="154" rx="20" ry="7" transform="rotate(18 212 154)" fill="#8a9e7e" opacity="0.6"/>
+                  <path d="M146 130 C118 118 88 112 62 96"/>
+                  <ellipse cx="75" cy="100" rx="18" ry="7" transform="rotate(-15 75 100)" fill="#8a9e7e" opacity="0.55"/>
+                  <path d="M148 110 C174 98 200 90 222 78"/>
+                  <ellipse cx="208" cy="82" rx="17" ry="6" transform="rotate(15 208 82)" fill="#8a9e7e" opacity="0.55"/>
+                  <circle cx="58" cy="93" r="4" fill="#b5785a" opacity="0.6"/>
+                  <circle cx="226" cy="76" r="4" fill="#b5785a" opacity="0.6"/>
+                  <circle cx="60" cy="183" r="3.5" fill="#b5785a" opacity="0.5"/>
+                </g>
+              </svg>
+              <div class="portrait-herb-overlay"></div>
+            </div>
+            <div class="about-accent-box"></div>
+            <div class="about-credential">
+              <div class="credential-title">Licensed Practitioner</div>
+              <div class="credential-value">Dr. Sun Chang, L.Ac.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-text">
+          <div class="section-label">About the Clinic</div>
+          <h2>Rooted in Tradition,<br/><em>Guided by Compassion</em></h2>
+          <div class="divider"></div>
+          <p>Dr. Sun Chang brings over a decade of expertise in Traditional Chinese Medicine to Annlee TCM Clinic, offering personalized, evidence-informed care in the heart of Missouri City.</p>
+          <p>With advanced training in acupuncture, herbal pharmacology, and neurological rehabilitation, Dr. Chang specializes in helping patients recover from strokes, manage chronic and acute pain, and achieve lasting balance across body, mind, and spirit.</p>
+          <p>Every patient receives a thorough consultation and a treatment plan crafted specifically for their constitution, lifestyle, and health goals — because no two healing journeys are the same.</p>
+          <div class="about-pills">
+            <span class="pill">Pain Management</span>
+            <span class="pill">Stroke Recovery</span>
+            <span class="pill">Herbal Medicine</span>
+            <span class="pill">Acupuncture</span>
+            <span class="pill">Holistic Wellness</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section id="approach">
+    <div class="container">
+      <div class="approach-header">
+        <div class="section-label">Our Method</div>
+        <h2>A Thoughtful <em>Four-Step</em><br/>Path to Healing</h2>
+      </div>
+      <div class="steps-grid">
+
+        <div class="step-card">
+          <div class="step-line"></div>
+          <div class="step-num">01</div>
+          <svg class="step-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M14 20 C14 16 17 13 20 13 C23 13 26 16 26 20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M20 20 L20 28" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <circle cx="20" cy="20" r="2" fill="currentColor"/>
+          </svg>
+          <div class="step-title">Comprehensive Assessment</div>
+          <div class="step-desc">We begin with a thorough intake — reviewing medical history, lifestyle, diet, and your tongue and pulse patterns — to build a complete picture of your health from a TCM perspective.</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-line"></div>
+          <div class="step-num">02</div>
+          <svg class="step-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="8" width="20" height="24" rx="1" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M15 15 H25 M15 20 H25 M15 25 H21" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <div class="step-title">Personalized Diagnosis</div>
+          <div class="step-desc">Using classical TCM diagnostic principles, Dr. Chang identifies patterns of imbalance — whether Qi stagnation, deficiency, or excess — and translates them into a precise, individualized treatment plan.</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-line"></div>
+          <div class="step-num">03</div>
+          <svg class="step-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 8 C20 8 12 14 12 22 C12 27 16 31 20 32 C24 31 28 27 28 22 C28 14 20 8 20 8Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+            <path d="M20 32 L20 36" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M17 22 C17 22 19 24 23 22" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <div class="step-title">Integrated Treatment</div>
+          <div class="step-desc">Combining acupuncture sessions with custom herbal formulas, cupping, and supportive therapies, we address root causes rather than symptoms — stimulating the body's own healing mechanisms.</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-line"></div>
+          <div class="step-num">04</div>
+          <svg class="step-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 28 C14 22 18 26 22 20 C26 14 30 18 32 14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="32" cy="13" r="2.5" fill="currentColor"/>
+            <path d="M10 32 H32" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+          </svg>
+          <div class="step-title">Ongoing Wellness Support</div>
+          <div class="step-desc">Healing is a journey, not an event. We track your progress, adjust treatments as you improve, and empower you with dietary and lifestyle guidance to sustain your gains long-term.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <div class="services-header">
+        <div class="section-label">Services &amp; Pricing</div>
+        <h2>What We <em>Offer</em></h2>
+        <p>Carefully designed therapies to restore balance, relieve pain, and renew vitality.</p>
+      </div>
+
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2 L12 22 M8 6 L16 6 M7 10 L17 10 M8 14 L16 14 M9 18 L15 18" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="service-name">Acupuncture Session</div>
+          <div class="service-desc">Precision needle therapy targeting meridian pathways to relieve pain, restore Qi flow, and promote deep systemic healing.</div>
+          <div class="service-price"><span class="price-amount">$120</span><span class="price-unit">/ session</span></div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3 C8 3 5 7 5 12 C5 17 8 21 12 21 C16 21 19 17 19 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M12 3 C14 3 16 5 17 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M9 12 L11 14 L15 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="service-name">Herbal Medicine Consultation</div>
+          <div class="service-desc">Custom herbal formulas sourced from classical pharmacopoeia, tailored to your unique diagnosis and constitution for lasting results.</div>
+          <div class="service-price"><span class="price-amount">$80</span><span class="price-unit">/ consultation</span></div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M12 2 L12 6 M12 18 L12 22 M2 12 L6 12 M18 12 L22 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M5.6 5.6 L8.5 8.5 M15.5 15.5 L18.4 18.4 M18.4 5.6 L15.5 8.5 M8.5 15.5 L5.6 18.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="service-name">Pain Management Therapy</div>
+          <div class="service-desc">Targeted protocols for chronic pain, arthritis, back and neck pain, headaches, and sports injuries — without reliance on medications.</div>
+          <div class="service-price"><span class="price-amount">$130</span><span class="price-unit">/ session</span></div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 21 C7 21 4 17 4 13 C4 9 7 6 10 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M12 21 C17 21 20 17 20 13 C20 9 17 6 14 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M10 5 C10 3 11 2 12 2 C13 2 14 3 14 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M9 13 L11 11 L13 15 L15 11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="service-name">Stroke Recovery Program</div>
+          <div class="service-desc">Specialized neurological rehabilitation combining scalp acupuncture, body points, and herbs to restore motor function, speech, and cognitive clarity.</div>
+          <div class="service-price"><span class="price-amount">$150</span><span class="price-unit">/ session</span></div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9" cy="7" r="3" stroke="currentColor" stroke-width="1.3"/>
+              <circle cx="16" cy="10" r="2.5" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M4 20 C4 16 6.5 14 9 14 C11.5 14 14 16 14 20" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M16 14 C18 14 20 15.5 20 18" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="service-name">Cupping Therapy</div>
+          <div class="service-desc">Traditional fire cupping and silicone cupping to release muscle tension, improve circulation, detoxify tissues, and accelerate recovery.</div>
+          <div class="service-price"><span class="price-amount">$75</span><span class="price-unit">/ session</span></div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4 C10 4 7 6 7 10 C7 14 10 17 12 18 C14 17 17 14 17 10 C17 6 14 4 12 4Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+              <path d="M12 18 L12 22" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M9 10 C9 10 10.5 12 14 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="service-name">Initial Intake &amp; Assessment</div>
+          <div class="service-desc">A 60&ndash;90 minute comprehensive consultation including tongue and pulse diagnosis, full health history review, and your personalized TCM treatment plan.</div>
+          <div class="service-price"><span class="price-amount">$100</span><span class="price-unit">/ first visit</span></div>
+        </div>
+
+      </div>
+
+      <!-- BUNDLES -->
+      <div class="bundles-section">
+        <div class="bundles-label">Value Bundles &mdash; Save with Packages</div>
+        <div class="bundles-grid">
+
+          <div class="bundle-card">
+            <div class="bundle-badge">Starter</div>
+            <div class="bundle-name">3-Treatment Bundle</div>
+            <div class="bundle-subtitle">Three sessions with custom herbal formula</div>
+            <div class="bundle-price">$380</div>
+            <div class="bundle-per">total package</div>
+            <ul class="bundle-includes">
+              <li>3 full acupuncture treatments</li>
+              <li>Custom herbal formula included</li>
+              <li>Treatment progress assessment</li>
+              <li>Ideal for acute conditions or first-time patients</li>
+            </ul>
+          </div>
+
+          <div class="bundle-card featured">
+            <div class="bundle-badge">Best Value</div>
+            <div class="bundle-name">10-Treatment Bundle</div>
+            <div class="bundle-subtitle">Ten sessions with ongoing herbal support</div>
+            <div class="bundle-price">$1,100</div>
+            <div class="bundle-per">total package &mdash; save over $300</div>
+            <ul class="bundle-includes">
+              <li>10 full acupuncture treatments</li>
+              <li>Custom herbal formulas throughout</li>
+              <li>Monthly progress reassessments</li>
+              <li>Best for chronic conditions &amp; stroke recovery</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <svg style="position:absolute;right:0;top:50%;transform:translateY(-50%);width:280px;opacity:0.06;pointer-events:none;" viewBox="0 0 280 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#5a6e50" stroke-width="1.5">
+        <path d="M140 490 C138 410 148 330 135 250 C124 180 140 120 128 60 C118 15 140 0 140 0"/>
+        <path d="M137 300 C105 282 72 274 44 258"/>
+        <ellipse cx="58" cy="263" rx="26" ry="10" transform="rotate(-22 58 263)" fill="#8a9e7e" opacity="0.7"/>
+        <path d="M138 260 C170 244 204 238 232 222"/>
+        <ellipse cx="216" cy="226" rx="24" ry="9" transform="rotate(20 216 226)" fill="#8a9e7e" opacity="0.7"/>
+        <path d="M136 190 C104 175 70 168 42 150"/>
+        <ellipse cx="56" cy="155" rx="23" ry="9" transform="rotate(-18 56 155)" fill="#8a9e7e" opacity="0.65"/>
+        <path d="M137 168 C168 153 200 146 226 130"/>
+        <ellipse cx="211" cy="134" rx="22" ry="8" transform="rotate(17 211 134)" fill="#8a9e7e" opacity="0.65"/>
+        <circle cx="40" cy="148" r="5" fill="#b5785a" opacity="0.6"/>
+        <circle cx="229" cy="128" r="5" fill="#b5785a" opacity="0.6"/>
+        <circle cx="41" cy="256" r="4.5" fill="#b5785a" opacity="0.55"/>
+      </g>
+    </svg>
+
+    <div class="container" style="position:relative;z-index:2;">
+      <div class="contact-grid">
+
+        <div class="contact-info">
+          <div class="section-label">Get in Touch</div>
+          <h2>Begin Your<br/><em>Healing Journey</em></h2>
+          <div class="divider"></div>
+          <p>Whether you're managing chronic pain, recovering from a stroke, or seeking whole-body wellness, we're here to listen. Reach out to schedule your consultation.</p>
+
+          <div class="contact-details">
+            <div class="contact-item">
+              <div class="contact-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Z" stroke="currentColor" stroke-width="1.3"/>
+                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.3"/>
+                </svg>
+              </div>
+              <div class="contact-item-text">
+                <span class="contact-item-label">Address</span>
+                4220 Cartwright Rd., Suite 803<br/>Missouri City, TX 77459
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8Z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="contact-item-text">
+                <span class="contact-item-label">Phone</span>
+                <a href="tel:8322825851" style="color:inherit;">(832) 282-5851</a>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="5" width="18" height="14" rx="1" stroke="currentColor" stroke-width="1.3"/>
+                  <path d="M3 8L12 13L21 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="contact-item-text">
+                <span class="contact-item-label">Email</span>
+                <a href="mailto:AnnLeeTCMClinic@gmail.com" style="color:inherit;">AnnLeeTCMClinic@gmail.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="fname" placeholder="Jane" required />
+              </div>
+              <div class="form-group">
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lname" placeholder="Smith" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="(832) 000-0000" />
+            </div>
+            <div class="form-group">
+              <label for="service">Service of Interest</label>
+              <select id="service" name="service">
+                <option value="">&#8212; Select a service &#8212;</option>
+                <option>Initial Intake &amp; Assessment</option>
+                <option>Acupuncture Session</option>
+                <option>Herbal Medicine Consultation</option>
+                <option>Pain Management Therapy</option>
+                <option>Stroke Recovery Program</option>
+                <option>Cupping Therapy</option>
+                <option>3-Treatment Bundle ($380)</option>
+                <option>10-Treatment Bundle ($1,100)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Tell Us About Your Health Goals</label>
+              <textarea id="message" name="message" placeholder="Briefly describe your main concern or what you'd like to achieve through TCM..."></textarea>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-filled" style="width:100%;text-align:center;border:none;">Send Message</button>
+              <p class="form-note">We typically respond within one business day. Your information is kept strictly confidential.</p>
+            </div>
+          </form>
+          <div id="form-success" style="display:none;padding:2rem;background:rgba(138,158,126,0.15);border:1px solid #8a9e7e;text-align:center;margin-top:1rem;">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#5a6e50;">Thank You for Reaching Out</p>
+            <p style="font-size:0.875rem;color:#5c4a30;margin-top:0.5rem;font-weight:300;">We'll be in touch shortly to schedule your consultation.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">Annlee <span>TCM</span> Clinic</div>
+        <div class="footer-tagline">Traditional Chinese Medicine &middot; Missouri City, TX</div>
+        <ul class="footer-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#approach">Approach</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="tel:8322825851">(832) 282-5851</a></li>
+        </ul>
+        <div class="footer-copy">
+          &copy; 2025 Annlee TCM Clinic &middot; Dr. Sun Chang, L.Ac. &middot; 4220 Cartwright Rd., Suite 803, Missouri City, TX 77459
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.service-card, .step-card, .bundle-card').forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = `opacity 0.55s ease ${i * 0.07}s, transform 0.55s ease ${i * 0.07}s`;
+      observer.observe(el);
+    });
+
+    document.querySelectorAll('.about-grid, .contact-grid, .approach-header').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.65s ease, transform 0.65s ease';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
